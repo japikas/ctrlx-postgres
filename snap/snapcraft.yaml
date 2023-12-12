@@ -41,9 +41,4 @@ parts:
     source: snap/local
     plugin: dump
 
-  configs:
-    plugin: dump
-    source: configs
-    organize:
-      'package-assets/*': package-assets/${SNAPCRAFT_PROJECT_NAME}/
 
