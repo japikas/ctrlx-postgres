@@ -15,15 +15,6 @@ architectures:
 system-usernames:
   snap_daemon: shared
 
-#plugs:
-#  shared-memory: 
-#    private: true
-
-#layout:
-#  binds:
-#    /tmp/.s.PGSQL.5432:
-#      /var/snap/postgres/current/solutions/activeConfiguration/tmp
-
 apps:
   postgres:
     command: launcher.sh
@@ -36,13 +27,6 @@ apps:
     passthrough:
       restart-delay: 20s
 
-#  drop-user:
-#    command: drop-user
-#    daemon: simple
-#    plugs:
-#      - home
-#      - network
-
 parts:
   postgres:
     source: git@github.com:postgres/postgres.git
@@ -53,10 +37,6 @@ parts:
       - libpq-dev
       - util-linux
 
-#  drop-user:
-#    source: drop_user
-#    plugin: make
-
   scripts:
     source: snap/local
     plugin: dump
@@ -66,26 +46,4 @@ parts:
     source: configs
     organize:
       'package-assets/*': package-assets/${SNAPCRAFT_PROJECT_NAME}/
-
-#  data:
-#    plugin: dump
-#    source: data
-
-#plugs:
-#  active-solution:
-#    interface: content
-#    content: solutions
-#    target: $SNAP_DATA/solutions
-
-#slots:
-#  package-run:
-#    interface: content
-#    content: package-run
-#    source:
-#      write:
-#      - $SNAP_DATA/package-run/${SNAPCRAFT_PROJECT_NAME}
-      
-hooks:
-  connect-plug-active-solution:
-    plugs: [active-solution]
 
