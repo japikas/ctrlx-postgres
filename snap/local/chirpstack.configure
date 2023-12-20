@@ -1,0 +1,9 @@
+create role chirpstack_as;
+create role chirpstack_ns;
+create database chirpstack_as with owner chirpstack_as;
+create database chirpstack_ns with owner chirpstack_ns;
+\c chirpstack_as
+create extension pg_trgm;
+create extension hstore;
+\q
+

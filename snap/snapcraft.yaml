@@ -15,6 +15,11 @@ architectures:
 system-usernames:
   snap_daemon: shared
 
+#layout:
+#  symlink:
+#    /usr/local/pgsql/share/extension:
+#      symlink: $SNAP/usr/share/postgresql/14/extension/
+
 apps:
   postgres:
     command: launcher.sh
@@ -29,13 +34,57 @@ apps:
 
 parts:
   postgres:
-    source: git@github.com:postgres/postgres.git
-    plugin: autotools
+    plugin: nil    
+#    source: git@github.com:postgres/postgres.git
+#    override-pull: |
+#      snapcraftctl pull
+#      pwd
+#      ls -l
+#      sed -i "s@SUBDIRS = @SUBDIRS = contrib @g" src/Makefile
+#    plugin: autotools
+#    plugin: make
+#    override-build: |
+#       ./configure && make && make install-local
+#       make world
+#       cd contrib
+#       make
+#       cd ..
+#       make install
+#       make install-world
+#    build-packages:
+#      - libpq-dev
+#      - libicu-dev
+#      - libreadline-dev
+#      - libxml2-utils
+#      - pandoc
     stage-packages:
-      - libreadline-dev
-      - libicu-dev
-      - libpq-dev
+      - postgresql=14+238
+      - postgresql-contrib=14+238
+      - postgresql-14-debversion=1.1.1-5
+#      - libpq5
+#      - libreadline8
+#      - libicu70
       - util-linux
+#    override-stage: |
+#      pwd
+#      ls -l
+#      ./configure
+#      cd contrib
+#      make
+#    organize:
+#      contrib/pg_trgm/pg_trgm.so: usr/local/pgsql/lib/	
+#      contrib/pg_trgm/*: usr/local/pgsql/share/extension/
+#    stage:
+#      - usr/local
+
+#      usr/local/pgsql/share/extension: usr/local/pgsql/share/oldension
+#      usr/share/postgresql/14/extension/*: usr/local/pgsql/share/extension/
+#      usr/local/pgsql/lib: usr/local/pgsql/oldlib
+#      usr/lib/postgresql/14/lib/*: usr/local/pgsql/lib/	
+#    override-stage: |
+#       cp -R ../parts/postgres/install/* .
+#       cp ../parts/postgres/build/contrib/pg_trgm/pg_trgm* usr/local/pgsql/share/extension/
+
 
   scripts:
     source: snap/local
